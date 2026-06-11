@@ -1,0 +1,64 @@
+const userModel = require("../models/user.model.js")
+const jwt = require('jsonwebtoken');
+
+
+const userRegsiterController= async (req,res)=>{
+    const {email,name,password}= req.body;
+    const isExists = await userModel.findOne({
+        email:email
+    });
+    if(isExists){
+        return res.status(422).json({
+            messgae: "User already exists with email.",
+            status: "failed"
+        })
+    }
+    const user = await userModel.create({
+        email,password,name
+    })
+    const token = jwt.sign({userId:user._id},process.env.JWT_TOKEN,{expiresIn:"3d"});
+    res.cookie("token",token);
+    res.status(201).json({
+        user:{
+            _id: user._id,
+            email: user.email,
+            name: user.name
+        },
+        token
+    })
+
+}
+
+const userLoginController = async (req,res)=>{
+    const {email,password}= req.body;
+    const user = await userModel.findOne({
+        email: email
+    }).select("password");
+    if(!user){
+        return res.status(401).json({
+            messgae: "User doesn't exist",
+            status: "failed"
+        })
+    }
+    const isValidPassword = await user.comparePassword(password)
+    if(!isValidPassword){
+        return res.status(401).json({
+            messgae: "Invalid Password",
+            status: "failed"
+        })
+    }
+    const token = jwt.sign({userId:user._id},process.env.JWT_TOKEN,{expiresIn:"3d"});
+    res.cookie("token",token);
+    res.status(200).json({
+        user:{
+            id: user._id,
+            email: user.email,
+            name: user.name
+        }, token
+    })
+}
+
+module.exports= {
+    userRegsiterController,
+    userLoginController
+}
