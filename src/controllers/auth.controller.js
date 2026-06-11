@@ -1,6 +1,6 @@
 const userModel = require("../models/user.model.js")
 const jwt = require('jsonwebtoken');
-
+const emailService= require("../services/email.js");
 
 const userRegsiterController= async (req,res)=>{
     const {email,name,password}= req.body;
@@ -18,6 +18,7 @@ const userRegsiterController= async (req,res)=>{
     })
     const token = jwt.sign({userId:user._id},process.env.JWT_TOKEN,{expiresIn:"3d"});
     res.cookie("token",token);
+    
     res.status(201).json({
         user:{
             _id: user._id,
@@ -26,14 +27,15 @@ const userRegsiterController= async (req,res)=>{
         },
         token
     })
+    await emailService.sendRegsistrationEmail(user.email,user.name);
 
 }
 
 const userLoginController = async (req,res)=>{
     const {email,password}= req.body;
     const user = await userModel.findOne({
-        email: email
-    }).select("password");
+        email
+    }).select("+password");
     if(!user){
         return res.status(401).json({
             messgae: "User doesn't exist",
@@ -49,6 +51,10 @@ const userLoginController = async (req,res)=>{
     }
     const token = jwt.sign({userId:user._id},process.env.JWT_TOKEN,{expiresIn:"3d"});
     res.cookie("token",token);
+    console.log(user.email,user.name);
+    emailService
+    .sendLoginEmail(user.email, user.name)
+    .catch(err => console.error("Email Error:", err));
     res.status(200).json({
         user:{
             id: user._id,
@@ -56,6 +62,7 @@ const userLoginController = async (req,res)=>{
             name: user.name
         }, token
     })
+    
 }
 
 module.exports= {
