@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { DB_NAME } from "../constant.js";
+const mongoose = require("mongoose");
+const {DB_NAME} = require('../constant.js')
 
 const connectDB = async()=>{
     try {
@@ -11,4 +11,4 @@ const connectDB = async()=>{
     }
 }
 
-export default connectDB;
+module.exports= connectDB;

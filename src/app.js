@@ -1,8 +1,6 @@
-import express from 'express';
-import cors from "cors";
-
+const express = require('express');
 const app = express();
-
+const cors = require('cors');
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true
@@ -16,4 +14,4 @@ app.get("/",(req,res)=>{
     res.send("hello to the api")
 })
 
-export {app};
+module.exports = app;

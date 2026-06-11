@@ -4,11 +4,12 @@
   "description": "",
   "license": "ISC",
   "author": "",
-  "type": "module",
+  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon src/index.js"
+    "dev": "npx nodemon src/index.js",
+    "start": "node src/index.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
