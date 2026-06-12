@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const cookieParser= require("cookie-parser");
 const authRouter= require("./routes/auth.routes.js")
+const accountRouter = require("./routes/account.routes.js");
+
 const cors = require('cors');
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
@@ -18,5 +20,6 @@ app.get("/",(req,res)=>{
 });
 
 app.use("/api/auth",authRouter);
+app.use("/api/accounts",accountRouter);
 
 module.exports = app;
