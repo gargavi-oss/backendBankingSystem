@@ -129,7 +129,7 @@ async function sendLoginEmail(email,name){
 }
 
 async function sendTransactionEmail(
-    userEmail,
+    email,
     name,
     amount,
     toAccount
@@ -158,7 +158,7 @@ async function sendTransactionEmail(
     </div>
     `;
     await sendEmail(
-        userEmail,
+        email,
         "Transaction Successful",
         `₹${amount} transferred successfully to account ${toAccount}.`,
         html
@@ -166,7 +166,7 @@ async function sendTransactionEmail(
 }
 
 async function sendFailedTransactionEmail(
-    userEmail,
+    email,
     name,
     amount,
     toAccount,
@@ -196,7 +196,7 @@ async function sendFailedTransactionEmail(
     </div>
     `;
     await sendEmail(
-        userEmail,
+        email,
         "Transaction Failed",
         `Transaction of ₹${amount} to account ${toAccount} failed. Reason: ${reason}`,
         html

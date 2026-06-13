@@ -26,6 +26,31 @@ async function createAccountController(req,res){
     })
 }
 
+async function getUserAccountsInfo(req,res){
+    const user = req.user;
+    const account = await accountModel.find({user:user._id});
+    res.status(200).json({
+        account
+    })
+}
+async function getAccountBalance(req,res){
+    const {accountId}= req.params;
+    const user = req.user;
+    const account = await accountModel.findOne({
+        _id: accountId,
+        user:user._id
+    })
+    if(!account){
+        return res.status(404).json({
+            message:"Account not found"
+        })
+    }
+    const balance = await account.getBalance();
+    return res.status(200).json({
+        accountId:account._id,
+        balance:balance
+    })
+}
 
 
-module.exports = {createAccountController}
+module.exports = {createAccountController,getUserAccountsInfo,getAccountBalance}
