@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 
 const transactionSchema = new mongoose.Schema({
     from:{
-        type: mongoose.Schema.types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "account",
         required: [true,"account must be specified for transaction"],
         index: true
     },
     to:{
-        type: mongoose.Schema.types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "account",
         required: [true,"Account must be specified for transaction"],
         index: true
@@ -36,6 +36,6 @@ const transactionSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const transactionModel = mongoose.Model("transaction",transactionSchema);
+const transactionModel = mongoose.model("transaction",transactionSchema);
 
 module.exports = transactionModel;

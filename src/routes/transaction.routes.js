@@ -4,6 +4,6 @@ const transactionController = require('../controllers/transaction.controller.js'
 const router = express.Router();
 
 
-router.post("/create",transactionController)
+// router.post("/create",transactionController)
 
 module.exports = router;

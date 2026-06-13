@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const emailService= require("../services/email.js");
 
 const userRegsiterController= async (req,res)=>{
-    const {email,name,password}= req.body;
+    const {email,name,password,systemUser}= req.body;
     const isExists = await userModel.findOne({
         email:email
     });
@@ -14,7 +14,7 @@ const userRegsiterController= async (req,res)=>{
         })
     }
     const user = await userModel.create({
-        email,password,name
+        email,password,name,systemUser
     })
     const token = jwt.sign({userId:user._id},process.env.JWT_TOKEN,{expiresIn:"3d"});
     res.cookie("token",token);

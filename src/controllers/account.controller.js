@@ -13,6 +13,7 @@ async function createAccountController(req,res){
     }
     const account = await accountModel.create({
         user: user._id,
+        userName: user.name,
         currency: currency
     });
     if(!account){

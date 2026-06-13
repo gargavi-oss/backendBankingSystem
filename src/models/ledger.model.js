@@ -32,7 +32,7 @@ const ledgerSchema = new mongoose.Schema({
 });
 
 function preventLedgerModification(){
-    throw new Error("Ledger entries are immutable")
+    throw new Error("Ledger entries are immutable");
 }
 ledgerSchema.pre('findOneAndUpdate',preventLedgerModification);
 ledgerSchema.pre('updateOne',preventLedgerModification);
@@ -43,5 +43,5 @@ ledgerSchema.pre('updateMany',preventLedgerModification);
 ledgerSchema.pre('findOneAndDelete',preventLedgerModification);
 ledgerSchema.pre("findOneAndReplace",preventLedgerModification);
 
-const ledgerModel = mongoose.Model("ledger",ledgerSchema);
+const ledgerModel = mongoose.model("ledger",ledgerSchema);
 module.exports=ledgerModel;
