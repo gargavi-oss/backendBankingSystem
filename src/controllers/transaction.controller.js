@@ -85,7 +85,7 @@ async function createTransaction(req,res){
     const session = await mongoose.startSession();
     session.startTransaction();
 
-    const newTransaction = await transactionModel.create({
+    const newTransaction = new transactionModel({
         from:fromAccount,to:toAccount,amount,idempotencyKey,status:"PENDING"
     })
     await newTransaction.save({session})
@@ -96,18 +96,25 @@ async function createTransaction(req,res){
         transaction: newTransaction._id,
         type:"DEBIT"
     }],{session})
+    await (()=>{
+        return new Promise((resolve)=>setTimeout(resolve,10*1000))
+    })()
     const creditLedgerEntry = await ledgerModel.create([{
         account: toAccount,
         amount: amount,
         transaction: newTransaction._id,
         type:"CREDIT"
     }],{session})
+    if(!creditLedgerEntry){
+        newTransaction.status = "FAILED";
+    }else{
+        newTransaction.status="COMPLETED";
+    }
     
-    newTransaction.status = "COMPLETED";
     await newTransaction.save({session});
     await session.commitTransaction();
     session.endSession();
-    emailService.sendTransactionEmail(fromUserAccount.email,fromUserAccount.name,amount,toAccount);
+    emailService.sendTransactionEmail(req.user.email,req.user.name,amount,toAccount);
     return res.status(201).json({
         message:"Transaction completed sucessfully",
         transaction: newTransaction
@@ -139,7 +146,7 @@ async function createIntialFundsTransaction(req,res){
     }
     const session = await mongoose.startSession();
     session.startTransaction();
-    const transaction = await transactionModel.create({
+    const transaction = new transactionModel({
         from: fromUserAccount._id,
         to: toAccount,
         amount,idempotencyKey,
