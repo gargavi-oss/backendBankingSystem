@@ -127,5 +127,122 @@ async function sendLoginEmail(email,name){
     );
 }
 
+async function sendTransactionEmail(
+    userEmail,
+    name,
+    amount,
+    toAccount
+){
+    const subject = "Transaction Successful";
 
-module.exports = {sendRegsistrationEmail,sendLoginEmail};
+    const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto;">
+        <h2 style="color:#1a73e8;">Transaction Confirmation</h2>
+
+        <p>Dear ${name},</p>
+
+        <p>
+            Your transaction has been processed successfully.
+        </p>
+
+        <div style="background:#f5f5f5; padding:15px; border-radius:8px;">
+            <b>Transaction Details</b><br><br>
+
+            Amount Transferred:
+            <b>₹${amount}</b><br>
+
+            Recipient Account:
+            <b>${toAccount}</b><br>
+
+            Transaction Time:
+            <b>${new Date().toLocaleString()}</b><br>
+
+            Status:
+            <span style="color:green;"><b>SUCCESSFUL</b></span>
+        </div>
+
+        <p style="margin-top:20px;">
+            If you did not authorize this transaction, please contact
+            SecureBank support immediately.
+        </p>
+
+        <p>
+            Regards,<br>
+            <b>SecureBank Team</b>
+        </p>
+    </div>
+    `;
+
+    await sendEmail(
+        userEmail,
+        subject,
+        `₹${amount} transferred successfully to account ${toAccount}`,
+        html
+    );
+}
+
+async function sendFailedTransactionEmail(
+    userEmail,
+    name,
+    amount,
+    toAccount,
+    reason
+){
+    const subject = "Transaction Failed";
+
+    const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto;">
+        <h2 style="color:#d32f2f;">Transaction Failed</h2>
+
+        <p>Dear ${name},</p>
+
+        <p>
+            We were unable to process your recent transaction.
+        </p>
+
+        <div style="background:#f5f5f5; padding:15px; border-radius:8px;">
+            <b>Transaction Details</b><br><br>
+
+            Amount Attempted:
+            <b>₹${amount}</b><br>
+
+            Recipient Account:
+            <b>${toAccount}</b><br>
+
+            Transaction Time:
+            <b>${new Date().toLocaleString()}</b><br>
+
+            Status:
+            <span style="color:red;"><b>FAILED</b></span><br>
+
+            Reason:
+            <b>${reason}</b>
+        </div>
+
+        <p style="margin-top:20px;">
+            No funds have been deducted from your account. Please verify the
+            transaction details and try again.
+        </p>
+
+        <p>
+            If you did not initiate this transaction, please contact
+            SecureBank support immediately.
+        </p>
+
+        <p>
+            Regards,<br>
+            <b>SecureBank Team</b>
+        </p>
+    </div>
+    `;
+
+    await sendEmail(
+        userEmail,
+        subject,
+        `Transaction of ₹${amount} to account ${toAccount} failed. Reason: ${reason}`,
+        html
+    );
+}
+
+
+module.exports = {sendRegsistrationEmail,sendLoginEmail,sendTransactionEmail,sendFailedTransactionEmail};

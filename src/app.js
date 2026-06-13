@@ -3,6 +3,7 @@ const app = express();
 const cookieParser= require("cookie-parser");
 const authRouter= require("./routes/auth.routes.js")
 const accountRouter = require("./routes/account.routes.js");
+const transactionRouter = require('./routes/transaction.routes.js');
 
 const cors = require('cors');
 app.use(cors({
@@ -21,5 +22,6 @@ app.get("/",(req,res)=>{
 
 app.use("/api/auth",authRouter);
 app.use("/api/accounts",accountRouter);
+app.use("/api/transactions",transactionRouter);
 
 module.exports = app;
