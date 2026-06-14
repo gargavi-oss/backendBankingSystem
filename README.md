@@ -129,11 +129,13 @@ GET /api/accounts/balance/ACCOUNT_ID
 
 ### Initial System Funding
 
+Used to provide initial funds to a newly created account through a dedicated system-controlled account.
+
 ```http
 POST /api/transactions/system/intial-funds
 ```
 
-Request Body:
+#### Request Body
 
 ```json
 {
@@ -142,6 +144,11 @@ Request Body:
   "idempotencyKey": "unique-key"
 }
 ```
+
+> **Security Note**
+>
+> Initial fund issuance is restricted to a dedicated **System Account/User**. Regular users cannot create money or release initial funds. This design ensures controlled money issuance, prevents unauthorized balance creation, and maintains the integrity of the transaction ledger.
+
 
 ### Transfer Funds
 
