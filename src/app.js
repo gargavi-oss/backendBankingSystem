@@ -17,7 +17,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.static("public"))
 
 app.get("/",(req,res)=>{
-    res.send("hello to the api")
+    res.send("Welcome to the Bank Backend System")
 });
 
 app.use("/api/auth",authRouter);
