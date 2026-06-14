@@ -1,0 +1,237 @@
+{
+  "info": {
+    "_postman_id": "9c2e4eb3-c389-4230-a671-37c194bb70f8",
+    "name": "New Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48990289",
+    "_collection_link": "https://go.postman.co/collection/48990289-9c2e4eb3-c389-4230-a671-37c194bb70f8?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Avi\",\n    \"email\": \"avigarg258@gmail.com\",\n    \"password\": \"Avigarg@234\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/auth/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n   \"email\": \"avigarg245@gmail.com\",\n    \"password\": \"Avigarg@234\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "createAccount",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"currency\": \"USD\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/accounts/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "accounts",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "creating intial transaction",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"toAccount\":\"6a2dafe87de908d11a7a35ae\",\n    \"amount\": 10000,\n    \"idempotencyKey\":\"019ec278-4c41-7634-93cf-9f0492fa2f74\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/transactions/system/intial-funds",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "transactions",
+            "system",
+            "intial-funds"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getting all the accounts of user",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n     \"email\": \"avigarg245@gmail.com\",\n    \"password\": \"Avigarg@234\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/accounts/info",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "accounts",
+            "info"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getting balance of the user account",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/accounts/balance/6a2dafe87de908d11a7a35ae",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "accounts",
+            "balance",
+            "6a2dafe87de908d11a7a35ae"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "creating transaction",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"fromAccount\": \"6a2db7b9a27712959ada4132\" ,\n    \"toAccount\":\"6a2dafe87de908d11a7a35ae\",\n    \"idempotencyKey\":\"019ec2aa-53ec-78e7-92ac-c016fef749ab\",\n    \"amount\": 4000\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/transactions/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "transactions",
+            "create"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Logout",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n     \"email\": \"avigarg245@gmail.com\",\n    \"password\": \"Avigarg@234\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/auth/logout",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "auth",
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
