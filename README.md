@@ -38,8 +38,12 @@ src/
 ├── routes/
 ├── middlewares/
 ├── services/
-├── config/
-└── server.js
+├── db/
+└── index.js
+├── app.js
+└── constant.js
+
+
 ```
 
 ---
