@@ -1,6 +1,22 @@
 # 💳 Banking Transaction Backend API
 
-A secure banking backend built with **Node.js**, **Express.js**, and **MongoDB** that supports user authentication, account management, balance tracking, and fund transfers with idempotency protection.
+A secure banking backend built with **Node.js**, **Express.js**, **MongoDB**, **Docker**, and **Express.js** that supports user authentication, account management, balance tracking, and fund transfers with idempotency protection.
+
+---
+
+## 🌐 Live Deployment
+
+### AWS EC2
+
+**Base URL**
+
+```text
+http://51.21.253.237:3000/
+```
+
+> The backend is containerized using **Docker** and deployed on an **AWS EC2** instance.
+
+---
 
 ## 🚀 Features
 
@@ -14,6 +30,8 @@ A secure banking backend built with **Node.js**, **Express.js**, and **MongoDB**
 * Transaction Ledger Tracking
 * Logout Functionality
 * MongoDB Integration
+* Dockerized Deployment
+* AWS EC2 Deployment
 
 ---
 
@@ -21,17 +39,21 @@ A secure banking backend built with **Node.js**, **Express.js**, and **MongoDB**
 
 * Node.js
 * Express.js
-* MongoDB
+* MongoDB Atlas
 * Mongoose
 * JWT Authentication
 * bcrypt.js
 * REST APIs
+* Docker
+* Docker Compose
+* AWS EC2
+* Postman
 
 ---
 
 ## 📂 Project Structure
 
-```bash
+```text
 src/
 ├── controllers/
 ├── models/
@@ -39,153 +61,81 @@ src/
 ├── middlewares/
 ├── services/
 ├── db/
-└── index.js
+├── index.js
 ├── app.js
 └── constant.js
+```
 
+---
 
+## 🐳 Docker
+
+### Build Image
+
+```bash
+docker build -t banking-backend .
+```
+
+### Run Container
+
+```bash
+docker run -p 3000:3000 --env-file .env banking-backend
+```
+
+### Docker Compose
+
+```bash
+docker compose up --build
+```
+
+---
+
+## ☁️ Deployment
+
+The application is deployed on an **AWS EC2** instance using Docker.
+
+Deployment workflow:
+
+* Dockerized Node.js backend
+* Docker Compose for container orchestration
+* MongoDB Atlas as the cloud database
+* AWS EC2 Ubuntu server hosting
+* Environment variables managed using `.env`
+* REST APIs exposed on port **3000**
+
+Live URL:
+
+```text
+http://51.21.253.237:3000/
 ```
 
 ---
 
 ## 🔐 Authentication APIs
 
-### Register User
-
-```http
-POST /api/auth/register
-```
-
-Request Body:
-
-```json
-{
-  "name": "Avi",
-  "email": "user@example.com",
-  "password": "Password@123"
-}
-```
-
-### Login
-
-```http
-POST /api/auth/login
-```
-
-Request Body:
-
-```json
-{
-  "email": "user@example.com",
-  "password": "Password@123"
-}
-```
-
-### Logout
-
-```http
-POST /api/auth/logout
-```
+*(Keep your existing API documentation here.)*
 
 ---
 
 ## 🏦 Account APIs
 
-### Create Account
-
-```http
-POST /api/accounts/create
-```
-
-Request Body:
-
-```json
-{
-  "currency": "USD"
-}
-```
-
-### Get User Accounts
-
-```http
-GET /api/accounts/info
-```
-
-### Get Account Balance
-
-```http
-GET /api/accounts/balance/:accountId
-```
-
-Example:
-
-```http
-GET /api/accounts/balance/ACCOUNT_ID
-```
+*(Keep existing content.)*
 
 ---
 
 ## 💸 Transaction APIs
 
-### Initial System Funding
-
-Used to provide initial funds to a newly created account through a dedicated system-controlled account.
-
-```http
-POST /api/transactions/system/intial-funds
-```
-
-#### Request Body
-
-```json
-{
-  "toAccount": "ACCOUNT_ID",
-  "amount": 10000,
-  "idempotencyKey": "unique-key"
-}
-```
-
-> **Security Note**
->
-> Initial fund issuance is restricted to a dedicated **System Account/User**. Regular users cannot create money or release initial funds. This design ensures controlled money issuance, prevents unauthorized balance creation, and maintains the integrity of the transaction ledger.
-
-
-### Transfer Funds
-
-```http
-POST /api/transactions/create
-```
-
-Request Body:
-
-```json
-{
-  "fromAccount": "ACCOUNT_ID",
-  "toAccount": "ACCOUNT_ID",
-  "amount": 4000,
-  "idempotencyKey": "unique-key"
-}
-```
+*(Keep existing content.)*
 
 ---
 
 ## 🔄 Idempotency Support
 
-To prevent duplicate transactions caused by retries or network failures, each transaction requires a unique idempotency key.
-
-```json
-{
-  "idempotencyKey": "unique-key"
-}
-```
-
-A transaction with the same key will only be processed once.
+*(Keep existing content.)*
 
 ---
 
 ## ⚙️ Environment Variables
-
-Create a `.env` file in the root directory:
 
 ```env
 PORT=3000
@@ -203,57 +153,53 @@ EMAIL_PASS=your_email_password
 
 ## ▶️ Installation
 
-Clone the repository:
-
 ```bash
 git clone https://github.com/yourusername/banking-transaction-backend.git
+
 cd banking-transaction-backend
-```
 
-Install dependencies:
-
-```bash
 npm install
-```
 
-Start the development server:
-
-```bash
 npm run dev
 ```
 
-Run in production:
+### Production
 
 ```bash
 npm start
+```
+
+Or using Docker:
+
+```bash
+docker compose up --build
 ```
 
 ---
 
 ## 🧪 API Testing
 
-The project includes a Postman collection covering:
+The project includes a **Postman Collection** covering:
 
 * User Registration
 * Login
+* Logout
 * Account Creation
 * Balance Inquiry
 * Initial Funding
 * Fund Transfer
-* Logout
-
-Import the Postman collection and test all endpoints locally.
 
 ---
 
 ## 🔒 Security Features
 
-* Password Hashing using bcrypt
 * JWT Authentication
+* bcrypt Password Hashing
 * Protected Routes
-* Transaction Idempotency
 * Input Validation
+* Transaction Idempotency
 * Secure Database Operations
+* Environment Variable Configuration
 
 ---
 
@@ -263,7 +209,7 @@ Import the Postman collection and test all endpoints locally.
 * Account Statements
 * Currency Conversion
 * Rate Limiting
-* Fraud Detection System
+* Fraud Detection
 * Admin Dashboard
 * Email & SMS Notifications
 
@@ -273,6 +219,6 @@ Import the Postman collection and test all endpoints locally.
 
 ### Avi Garg
 
-Backend Developer passionate about building scalable and secure systems using Node.js, Express, MongoDB, and modern backend architecture.
+Backend Developer passionate about building scalable, secure, and cloud-native backend systems using Node.js, Express.js, MongoDB, Docker, AWS EC2, and modern backend architecture.
 
-**Skills:** Node.js • Express.js • MongoDB • REST APIs • JWT • Mongoose • System Design
+**Skills:** Node.js • Express.js • MongoDB • REST APIs • JWT • Docker • Docker Compose • AWS EC2 • Mongoose • System Design
